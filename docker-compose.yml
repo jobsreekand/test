@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  web:
+    build: .                 
+    container_name: my-php-web
+    ports:
+      - "8080:80"            
+    volumes:
+      # THIS IS THE MAGIC LINE
+      # It maps your local file to the container's file in real-time
+      - ./index.php:/var/www/html/index.php
+    depends_on:
+      - db                   
+
+  db:
+    image: mysql:8.0         
+    container_name: my-mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: "RootPasswd811#"  
+      MYSQL_DATABASE: "test"                 
+      MYSQL_USER: "admin"                    
+      MYSQL_PASSWORD: "Passwd811#"           
+    ports:
+      - "3306:3306"          
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:

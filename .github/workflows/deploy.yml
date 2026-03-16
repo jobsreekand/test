@@ -1,0 +1,21 @@
+name: Deploy to Dev Server (cent2)
+
+on:
+  push:
+    branches:
+      - main  # Pushing to main triggers the Dev deployment
+
+jobs:
+  deploy-dev:
+    runs-on: [self-hosted, dev] # This forces it to run ONLY on cent2
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          path: /opt/my-php-app # Tells GitHub where to place the pulled code
+
+      - name: Deploy with Docker Compose
+        run: |
+          cd /opt/my-php-app
+          docker-compose up -d --build
