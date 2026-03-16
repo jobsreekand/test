@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-        with:
-          path: /opt/my-php-app # Tells GitHub where to place the pulled code
 
       - name: Deploy with Docker Compose
         run: |
